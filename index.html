@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Nobel Timeline · multiplayer</title>
+</head>
+<body>
+<div class="game-container">
+  <h1>
+    <span>⏳</span> Nobel Timeline
+  </h1>
+  <div class="subhead">Place each committee citation in the correct year on your own timeline</div>
+
+  <!-- SETUP SCREEN -->
+  <div class="setup-screen" id="setupScreen">
+    <h2>Who is playing?</h2>
+    <div class="setup-input-row">
+      <input type="text" id="playerNameInput" placeholder="Enter player name…" maxlength="20" autocomplete="off">
+      <button id="addPlayerBtn">Add</button>
+    </div>
+    <div class="player-list" id="playerList"></div>
+    <div class="setup-hint" id="setupHint">Add at least one player to begin.</div>
+    <button class="start-game-btn" id="startGameBtn" disabled>Start game</button>
+  </div>
+
+  <!-- GAME AREA -->
+  <div class="game-area" id="gameArea">
+    <!-- Turn banner -->
+    <div class="turn-banner" id="turnBanner">
+      <span>🎯 It's</span>
+      <span class="player-pill" id="currentPlayerName">—</span>
+      <span>'s turn</span>
+    </div>
+
+    <!-- Citation card -->
+    <div class="citation-card">
+      <div class="citation-label">Committee citation</div>
+      <div class="citation-text" id="citationDisplay">Loading …</div>
+      <div class="laureate-hint" id="laureateHint"></div>
+    </div>
+
+    <!-- Insert zone -->
+    <div class="insert-zone">
+      <div class="insert-label">Place in your timeline</div>
+      <div class="slot-buttons" id="slotButtons"></div>
+    </div>
+
+    <!-- Action bar -->
+    <div class="action-bar">
+      <button class="primary-btn" id="nextBtn" disabled>▶ Next prize</button>
+      <button class="secondary-btn" id="resetBtn">↻ New game</button>
+    </div>
+
+    <div class="feedback" id="feedbackMessage">
+      Choose a position to place the citation.
+    </div>
+
+    <!-- Player timelines -->
+    <div class="players-section">
+      <h2>📋 Timelines</h2>
+      <div id="playersTimelines"></div>
+    </div>
+  </div>
+</div>
+<div id="globalTooltip" class="global-tooltip"></div>
+<script src="nobel_prizes_physics.csv.js"></script>
+<script src="nobel_prizes_chemistry.csv.js"></script>
+<script src="nobel_prizes_medicine.csv.js"></script>
+
+<script src="script.js"></script>
+</body>
+</html>
