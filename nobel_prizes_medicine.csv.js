@@ -36,7 +36,7 @@ window.NOBEL_MEDICINE_CSV = `year,laureate,citation
 1944,Joseph Erlanger & Herbert Spencer Gasser,"for their discoveries relating to the highly differentiated functions of single nerve fibres"
 1945,Sir Alexander Fleming & Ernst Boris Chain & Sir Howard Walter Florey,"for the discovery of penicillin and its curative effect in various infectious diseases"
 1946,Hermann Joseph Muller,"for the discovery of the production of mutations by means of X-ray irradiation"
-1947,Carl Ferdinand Cori & Gerty Theresa Cori, née Radnitz & Bernardo Alberto Houssay,"for their discovery of the course of the catalytic conversion of glycogen / for his discovery of the part played by the hormone of the anterior pituitary lobe in the metabolism of sugar"
+1947,"Carl Ferdinand Cori & Gerty Theresa Cori, née Radnitz & Bernardo Alberto Houssay","for their discovery of the course of the catalytic conversion of glycogen / for his discovery of the part played by the hormone of the anterior pituitary lobe in the metabolism of sugar"
 1948,Paul Hermann Müller,"for his discovery of the high efficiency of DDT as a contact poison against several arthropods"
 1949,Walter Rudolf Hess & António Caetano de Abreu Freire Egas Moniz,"for his discovery of the functional organization of the interbrain as a coordinator of the activities of the internal organs / for his discovery of the therapeutic value of leucotomy in certain psychoses"
 1950,Edward Calvin Kendall & Tadeus Reichstein & Philip Showalter Hench,"for their discoveries relating to the hormones of the adrenal cortex, their structure and biological effects"
