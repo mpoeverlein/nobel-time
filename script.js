@@ -30,6 +30,24 @@ const feedbackMessage = document.getElementById('feedbackMessage');
 const playersTimelines = document.getElementById('playersTimelines');
 const globalTooltip = document.getElementById('globalTooltip');
 
+// All available categories and their prize data sources.
+// The `csv` reference is set later once you define your window variables.
+const CATEGORY_DEFS = [
+  { key: 'physics',     label: 'Physics',              varName: 'NOBEL_PHYSICS_CSV' },
+  { key: 'chemistry',   label: 'Chemistry',            varName: 'NOBEL_CHEMISTRY_CSV' },
+  { key: 'medicine',    label: 'Physiology or Medicine', varName: 'NOBEL_MEDICINE_CSV' },
+  { key: 'literature',  label: 'Literature',           varName: 'NOBEL_LITERATURE_CSV' },
+  { key: 'peace',       label: 'Peace',                varName: 'NOBEL_PEACE_CSV' },
+  { key: 'economics',   label: 'Economics',            varName: 'NOBEL_ECONOMICS_CSV' },
+];
+
+// Which categories are currently selected in the setup screen.
+// Default: all that have data available.
+let selectedCategories = new Set();
+
+// DOM
+const categoryGrid = document.getElementById('categoryGrid');
+
 document.addEventListener('mouseover', (e) => {
   const card = e.target.closest('.timeline-card');
   if (!card) return;
@@ -160,14 +178,31 @@ startGameBtn.addEventListener('click', () => {
     startGame(pendingPlayers);
 });
 
+function buildPrizePool() {
+  const pool = [];
+  for (const def of getAvailableCategories()) {
+    if (!selectedCategories.has(def.key)) continue;
+    console.log(def.varName);
+    const csv = window[def.varName];
+    const prizes = parseCSV(csv).map(p => ({ ...p, category: def.label }));
+    pool.push(...prizes);
+  }
+  return pool;
+}
+
 // ---------- GAME START ----------
 function startGame(playerNames) {
-  // Prepare the prize pool once
-  availablePrizes = shuffleArray([...allPrizes]);
+  // Build pool from selected categories only
+  const pool = buildPrizePool();
+  if (pool.length === 0) {
+    alert('No prizes available for the selected categories.');
+    return;
+  }
 
-  // Deal one unique starting card to each player
+  availablePrizes = shuffleArray(pool);
+
   players = playerNames.map(name => {
-    const startingCard = availablePrizes.pop();  // takes from the end of the shuffled array
+    const startingCard = availablePrizes.pop();
     return {
       name,
       timeline: startingCard ? [{ ...startingCard }] : []
@@ -180,15 +215,18 @@ function startGame(playerNames) {
   nextEnabled = false;
   nextBtn.disabled = false;
 
+  // Switch from setup screen to game area
   setupScreen.style.display = 'none';
   gameArea.classList.add('active');
 
+  // Render the game state
   renderPlayersTimelines();
   updateTurnBanner();
+
   citationDisplay.textContent = '—';
   laureateHint.innerHTML = '';
   slotButtonsContainer.innerHTML = '';
-  feedbackMessage.textContent = `Click "Next prize" to draw the first citation.`;
+  feedbackMessage.textContent = 'Click "Next prize" to draw the first citation.';
   feedbackMessage.className = 'feedback';
 
   nextBtn.textContent = '▶ Next prize';
@@ -468,13 +506,20 @@ async function init() {
     { category: 'Physics',   csv: window.NOBEL_PHYSICS_CSV },
     { category: 'Chemistry', csv: window.NOBEL_CHEMISTRY_CSV },
     { category: 'Medicine', csv: window.NOBEL_MEDICINE_CSV },
-
-    // add more as you go
+    { category: 'Literature', csv: window.NOBEL_LITERATURE_CSV },
+    { category: 'Peace', csv: window.NOBEL_PEACE_CSV },
+    { category: 'Economics', csv: window.NOBEL_ECONOMICS_CSV },
     ];
 
     allPrizes = SOURCES.flatMap(({ category, csv }) =>
     parseCSV(csv).map(prize => ({ ...prize, category }))
     );
+
+    // Select all available categories by default
+    const available = getAvailableCategories();
+    selectedCategories = new Set(available.map(d => d.key));
+    renderCategoryToggles();
+    updateSetupHint();
 
 
   if (allPrizes.length === 0) {
@@ -483,6 +528,79 @@ async function init() {
   }
   renderPlayerChips();
   playerNameInput.focus();
+}
+
+// Detect which categories actually have CSV data loaded.
+// This lets you add CSVs incrementally without touching this file.
+function getAvailableCategories() {
+  return CATEGORY_DEFS.filter(def => {
+    const csv = window[def.varName];
+    return typeof csv === 'string' && csv.trim().length > 0;
+  });
+}
+
+// Render the category toggle buttons.
+function renderCategoryToggles() {
+  const available = getAvailableCategories();
+
+  if (available.length === 0) {
+    categoryGrid.innerHTML = '<div class="setup-hint">No categories available. Check your CSV data.</div>';
+    return;
+  }
+
+  categoryGrid.innerHTML = available.map(def => {
+    const isSelected = selectedCategories.has(def.key);
+    return `<button class="category-toggle ${isSelected ? 'selected' : ''}" data-key="${def.key}">${def.label}</button>`;
+  }).join('');
+
+  // Attach handlers
+  categoryGrid.querySelectorAll('.category-toggle').forEach(btn => {
+    btn.addEventListener('click', () => toggleCategory(btn.dataset.key));
+  });
+
+  updateCategoryDisabledStates();
+  //updateStartButtonState();
+}
+
+// Toggle a category on/off, but never let the last one be deselected.
+function toggleCategory(key) {
+  if (selectedCategories.has(key)) {
+    if (selectedCategories.size === 1) return; // can't remove the last one
+    selectedCategories.delete(key);
+  } else {
+    selectedCategories.add(key);
+  }
+  renderCategoryToggles();
+  updateSetupHint();
+}
+
+// Gray out the last selected toggle so it can't be clicked off.
+function updateCategoryDisabledStates() {
+  const available = getAvailableCategories();
+  const onlyOneSelected = selectedCategories.size === 1;
+  categoryGrid.querySelectorAll('.category-toggle').forEach(btn => {
+    const isSelected = selectedCategories.has(btn.dataset.key);
+    btn.classList.toggle('disabled', onlyOneSelected && isSelected);
+  });
+}
+
+// Update the "Add at least…" hint text.
+function updateSetupHint() {
+  const playerCount = pendingPlayers.length;
+  const catCount = selectedCategories.size;
+
+  if (playerCount === 0 && catCount === 0) {
+    setupHint.textContent = 'Add at least one player and one category to begin.';
+  } else if (playerCount === 0) {
+    setupHint.textContent = 'Add at least one player to begin.';
+  } else if (catCount === 0) {
+    setupHint.textContent = 'Select at least one category.';
+  } else {
+    setupHint.textContent = `${playerCount} player${playerCount !== 1 ? 's' : ''} · ${catCount} categor${catCount !== 1 ? 'ies' : 'y'} selected.`;
+  }
+
+  // Start button gate
+  startGameBtn.disabled = !(playerCount > 0 && catCount > 0);
 }
 
 init();

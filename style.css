@@ -1037,3 +1037,82 @@ h1 span {
     max-width: 64px;
   }
 }
+
+.category-heading {
+  font-weight: 500;
+  color: #2e2a24;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 700px;
+  padding: 0.25rem;
+}
+
+.category-toggle {
+  background: #f5efe6;
+  border: 2px solid #d9cfc0;
+  color: #4d4237;
+  padding: 0.7rem 1.4rem;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.15s;
+  box-shadow: 0 2px 0 #cdc1b2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.category-toggle::before {
+  content: "○";
+  font-size: 1rem;
+  color: #a39482;
+  transition: 0.15s;
+}
+
+.category-toggle:hover {
+  background: #ebe4d8;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 #b8a99a;
+}
+
+.category-toggle.selected {
+  background: #2e2a24;
+  border-color: #2e2a24;
+  color: #fcf9f2;
+  box-shadow: 0 3px 0 #1a1612;
+}
+
+.category-toggle.selected::before {
+  content: "●";
+  color: #d9cfc0;
+}
+
+.category-toggle.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* On mobile, make the category grid stack nicely */
+@media (max-width: 700px) {
+  .category-heading {
+    font-size: 1.2rem;
+  }
+  .category-grid {
+    gap: 8px;
+  }
+  .category-toggle {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.88rem;
+  }
+}

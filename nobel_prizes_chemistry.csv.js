@@ -115,4 +115,5 @@ window.NOBEL_CHEMISTRY_CSV = `year,laureate,citation
 2022,Carolyn R. Bertozzi & Morten Meldal & K. Barry Sharpless,"for the development of click chemistry and bioorthogonal chemistry"
 2023,Moungi G. Bawendi & Louis E. Brus & Alexei I. Ekimov,"for the discovery and synthesis of quantum dots"
 2024,David Baker & Demis Hassabis & John M. Jumper,"for computational protein design / for protein structure prediction"
-2025,Susumu Kitagawa & Richard Robson & Omar M. Yaghi,"for the development of metal-organic frameworks"`
+2025,Susumu Kitagawa & Richard Robson & Omar M. Yaghi,"for the development of metal-organic frameworks"
+2026,Henri B. Kagan & Kenso Soai,"for the discovery of nonlinear effects and autocatalysis in asymmetric organic synthesis"`

@@ -117,4 +117,5 @@ window.NOBEL_PHYSICS_CSV = `year,laureate,citation
 2022,Alain Aspect & John F. Clauser & Anton Zeilinger,"For experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science."
 2023,Pierre Agostini & Ferenc Krausz & Anne L'Huillier,"For experimental methods that generate attosecond pulses of light for the study of electron dynamics in matter."
 2024,John J. Hopfield & Geoffrey E. Hinton,"For foundational discoveries and inventions that enable machine learning with artificial neural networks."
-2025,John Clarke & Michel H. Devoret & John M. Martinis,"For the discovery of macroscopic quantum mechanical tunnelling and energy quantisation in an electric circuit."`
+2025,John Clarke & Michel H. Devoret & John M. Martinis,"For the discovery of macroscopic quantum mechanical tunnelling and energy quantisation in an electric circuit."
+2026,Francis Halzen,"for decisive contributions to the IceCube Neutrino Observatory and the discovery of high-energy neutrinos of astrophysical origin"`

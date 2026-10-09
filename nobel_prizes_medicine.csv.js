@@ -114,4 +114,5 @@ window.NOBEL_MEDICINE_CSV = `year,laureate,citation
 2022,Svante Pääbo,"for his discoveries concerning the genomes of extinct hominins and human evolution"
 2023,Katalin Karikó & Drew Weissman,"for their discoveries concerning nucleoside base modifications that enabled the development of effective mRNA vaccines against COVID-19"
 2024,Victor Ambros & Gary Ruvkun,"for the discovery of microRNA and its role in post-transcriptional gene regulation"
-2025,Mary E. Brunkow & Fred Ramsdell & Shimon Sakaguchi,"for their discoveries concerning peripheral immune tolerance"`
+2025,Mary E. Brunkow & Fred Ramsdell & Shimon Sakaguchi,"for their discoveries concerning peripheral immune tolerance"
+2026,Karl Deisseroth & Peter Hegemann & Georg Nagel,"for their discoveries concerning light-gated ion channels and optogenetics"`
